@@ -33,23 +33,23 @@ func main() {
 			continue
 		}
 
-		execution(input)
+		executeCommand(input)
 	}
 }
 
-// execution executes the command based on the input string.
-func execution(s string) {
-	args := strings.Fields(s)
+// executeCommand parses and executes the user's input command.
+func executeCommand(input string) {
+	args := strings.Fields(input)
 	command := args[0]
 
 	if len(args) == 1 {
 		switch command {
 		case "help":
-			printHelp()
+			displayHelpMenu()
 		case "ls":
-			listFiles(".")
+			listDirectoryContents(".")
 		case "/":
-			homeDire()
+			changeToHomeDirectory()
 		case "exit":
 			os.Exit(0)
 		default:
@@ -60,38 +60,38 @@ func execution(s string) {
 	} else if len(args) > 1 && len(args) < 3 {
 		switch command {
 		case "ls":
-			listFiles(args[1])
+			listDirectoryContents(args[1])
 		case "cd":
-			changeDirectory(args[1])
+			changeCurrentDirectory(args[1])
 		}
 	} else {
-		fmt.Println("many args")
+		fmt.Println("Too many arguments.")
 	}
 }
 
-// printHelp prints the help message for the CLI.
-func printHelp() {
+// displayHelpMenu prints the help message for the CLI.
+func displayHelpMenu() {
 	fmt.Println()
 	fmt.Println("  Available commands:")
 	fmt.Println("    help       		  - Show this help message")
 	fmt.Println("    cr         		  - Create a directory (usage: cr <directory>)")
-	fmt.Println("    cd         		  - Changes the current directory (usage: cd <directory>)")
-	fmt.Println("    ls         		  - List files in a directory (usage: ls)")
+	fmt.Println("    cd         		  - Change the current directory (usage: cd <directory>)")
+	fmt.Println("    ls         		  - List files in a directory (usage: ls [directory])")
 	fmt.Println("    rm         		  - Delete a file or directory (usage: rm <path>)")
 	fmt.Println("    /          		  - Change to home directory (usage: / )")
 	fmt.Println("    exit or Ctrl+C        - Exit the program")
 	fmt.Println()
 }
 
-// listFiles lists the files in the specified directory.
-func listFiles(n string) {
-	enteries, err := os.ReadDir(n)
+// listDirectoryContents lists the files and directories in the specified path.
+func listDirectoryContents(path string) {
+	entries, err := os.ReadDir(path)
 
 	fmt.Println()
 	if err != nil {
-		fmt.Printf("  >_   Error - ls: Unable to access '%s' - Directory not found.\n", n)
+		fmt.Printf("  >_   Error - ls: Unable to access '%s' - Directory not found.\n", path)
 	} else {
-		for _, entry := range enteries {
+		for _, entry := range entries {
 			info, err := entry.Info()
 
 			if err != nil {
@@ -108,27 +108,27 @@ func listFiles(n string) {
 	fmt.Println()
 }
 
-// changeDirectory changes the current directory to the specified path.
-func changeDirectory(n string) {
-	err := os.Chdir(n)
+// changeCurrentDirectory changes the current working directory to the specified path.
+func changeCurrentDirectory(path string) {
+	err := os.Chdir(path)
 
 	if err != nil {
 		fmt.Println()
-		fmt.Printf("  >_   Error - cd: Unable to access '%s' - Directory not found.\n", n)
+		fmt.Printf("  >_   Error - cd: Unable to access '%s' - Directory not found.\n", path)
 		fmt.Println()
 	}
 }
 
-// homeDire changes the current directory to the user's home directory.
-func homeDire() {
-	targetPath, err := os.UserHomeDir()
+// changeToHomeDirectory changes the current directory to the user's home directory.
+func changeToHomeDirectory() {
+	homeDir, err := os.UserHomeDir()
 
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
 
-	err = os.Chdir(targetPath)
+	err = os.Chdir(homeDir)
 
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
