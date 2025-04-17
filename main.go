@@ -39,6 +39,8 @@ func execution(s string) {
 			printHelp()
 		case "ls":
 			listFiles(".")
+		case "exit":
+			os.Exit(0)
 		default:
 			fmt.Printf("'%s' is not an out-cli command. See 'help'.\n", args[0])
 		}
@@ -54,24 +56,24 @@ func execution(s string) {
 
 func printHelp() {
 	fmt.Println()
-	fmt.Println("Available commands:")
-	fmt.Println("  help       		- Show this help message")
-	fmt.Println("  cr         		- Create a directory (usage: cr <directory>)")
-	fmt.Println("  cd         		- changes the current directory (usage: cd <directory>)")
-	fmt.Println("  ls         		- List files in a directory (usage: ls)")
-	fmt.Println("  rm         		- Delete a file or directory (usage: rm <path>)")
-	fmt.Println("  exit or Ctrl+C        - Exit the program")
+	fmt.Println("  Available commands:")
+	fmt.Println("    help       		  - Show this help message")
+	fmt.Println("    cr         		  - Create a directory (usage: cr <directory>)")
+	fmt.Println("    cd         		  - changes the current directory (usage: cd <directory>)")
+	fmt.Println("    ls         		  - List files in a directory (usage: ls)")
+	fmt.Println("    rm         		  - Delete a file or directory (usage: rm <path>)")
+	fmt.Println("    exit or Ctrl+C        - Exit the program")
 	fmt.Println()
 }
 
 func listFiles(n string) {
 	enteries, err := os.ReadDir(n)
 
+	fmt.Println()
 	if err != nil {
-		fmt.Printf("Error - ls: Unable to access '%s' - Directory not found.\n", n)
+		fmt.Printf("  >_   Error - ls: Unable to access '%s' - Directory not found.\n", n)
 	}
 
-	fmt.Println()
 	for _, entry := range enteries {
 		info, err := entry.Info()
 
@@ -80,9 +82,9 @@ func listFiles(n string) {
 		}
 
 		if entry.IsDir() {
-			fmt.Printf("  #   %s               <dir>                  %s\n", info.ModTime().Format("02/01/2006"), entry.Name())
+			fmt.Printf("  >   %s               <dir>                  %s\n", info.ModTime().Format("02/01/2006"), entry.Name())
 		} else {
-			fmt.Printf("  #   %s               <file>                 %s\n", info.ModTime().Format("02/01/2006"), entry.Name())
+			fmt.Printf("  >   %s               <file>                 %s\n", info.ModTime().Format("02/01/2006"), entry.Name())
 		}
 	}
 	fmt.Println()
