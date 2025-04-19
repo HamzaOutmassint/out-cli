@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -50,6 +51,8 @@ func executeCommand(input string) {
 			listDirectoryContents(".")
 		case "/":
 			changeToHomeDirectory()
+		case "cls":
+			clearScreen()
 		case "exit":
 			os.Exit(0)
 		default:
@@ -101,6 +104,7 @@ func displayHelpMenu() {
 	fmt.Println("    rm         		  	  - Delete a file/files or an empty directory/directories (usage: rm <path> <path>)")
 	fmt.Println("    rmd         		  - Delete a directory or multi directories (usage: rm <path> <path>)")
 	fmt.Println("    /          		  	  - Change to home directory (usage: / )")
+	fmt.Println("    cls          		  	  - clear terminal")
 	fmt.Println("    exit or Ctrl+C        	  - Exit the program")
 	fmt.Println()
 }
@@ -196,4 +200,10 @@ func changeToHomeDirectory() {
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 	}
+}
+
+func clearScreen() {
+	cmd := exec.Command("cmd", "/c", "cls")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }
