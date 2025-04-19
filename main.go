@@ -63,11 +63,30 @@ func executeCommand(input string) {
 			listDirectoryContents(args[1])
 		case "cd":
 			changeCurrentDirectory(args[1])
+		case "rm":
+			removeFile(args[1:])
+		case "rmd":
+			removeDirectory(args[1:])
 		case "mkd":
 			createDirectory(args[1:])
+		default:
+			fmt.Println()
+			fmt.Printf("  >_  '%s' is not an out-cli command. See 'help'.\n", args[0])
+			fmt.Println()
 		}
-	} else {
-		fmt.Println("Too many arguments.")
+	} else if len(args) > 1 {
+		switch command {
+		case "mkd":
+			createDirectory(args[1:])
+		case "rm":
+			removeFile(args[1:])
+		case "rmd":
+			removeDirectory(args[1:])
+		default:
+			fmt.Println()
+			fmt.Printf("  >_  '%s' is not an out-cli command. See 'help'.\n", args[0])
+			fmt.Println()
+		}
 	}
 }
 
@@ -90,11 +109,11 @@ func createDirectory(n []string) {
 	for _, v := range n {
 		err := os.Mkdir(v, 0744)
 
-		fmt.Println()
 		if err != nil {
+			fmt.Println()
 			fmt.Printf("  >_  Error - mkd '%s': Cannot create a file when that file already exists.\n", v)
+			fmt.Println()
 		}
-		fmt.Println()
 	}
 }
 
@@ -116,6 +135,8 @@ func listDirectoryContents(path string) {
 	fmt.Println()
 	if err != nil {
 		fmt.Printf("  >_   Error - ls: Unable to access '%s' - Directory not found.\n", path)
+	} else if len(entries) == 0 {
+		fmt.Println("  >_  Empty directory")
 	} else {
 		for _, entry := range entries {
 			info, err := entry.Info()
@@ -134,7 +155,31 @@ func listDirectoryContents(path string) {
 	fmt.Println()
 }
 
-// remove a directory or a file with a specified name.
+// remove a file with a specified name.
+func removeFile(n []string) {
+	for _, v := range n {
+		err := os.Remove(v)
+
+		if err != nil {
+			fmt.Println()
+			fmt.Println("  >_  Error: ", err)
+			fmt.Println()
+		}
+	}
+}
+
+// remove a directory with a specified name.
+func removeDirectory(n []string) {
+	for _, v := range n {
+		err := os.RemoveAll(v)
+
+		if err != nil {
+			fmt.Println()
+			fmt.Println("  >_  Error: ", err)
+			fmt.Println()
+		}
+	}
+}
 
 // changeToHomeDirectory changes the current directory to the user's home directory.
 func changeToHomeDirectory() {
