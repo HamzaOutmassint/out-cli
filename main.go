@@ -63,6 +63,8 @@ func executeCommand(input string) {
 			listDirectoryContents(args[1])
 		case "cd":
 			changeCurrentDirectory(args[1])
+		case "mkd":
+			createDirectory(args[1:])
 		}
 	} else {
 		fmt.Println("Too many arguments.")
@@ -81,6 +83,30 @@ func displayHelpMenu() {
 	fmt.Println("    /          		  - Change to home directory (usage: / )")
 	fmt.Println("    exit or Ctrl+C        - Exit the program")
 	fmt.Println()
+}
+
+// createDirectory creates a new directory with the specified name.
+func createDirectory(n []string) {
+	for _, v := range n {
+		err := os.Mkdir(v, 0744)
+
+		fmt.Println()
+		if err != nil {
+			fmt.Printf("  >_  Error - mkd '%s': Cannot create a file when that file already exists.\n", v)
+		}
+		fmt.Println()
+	}
+}
+
+// changeCurrentDirectory changes the current working directory to the specified path.
+func changeCurrentDirectory(path string) {
+	err := os.Chdir(path)
+
+	if err != nil {
+		fmt.Println()
+		fmt.Printf("  >_   Error - cd: Unable to access '%s' - Directory not found.\n", path)
+		fmt.Println()
+	}
 }
 
 // listDirectoryContents lists the files and directories in the specified path.
@@ -108,16 +134,7 @@ func listDirectoryContents(path string) {
 	fmt.Println()
 }
 
-// changeCurrentDirectory changes the current working directory to the specified path.
-func changeCurrentDirectory(path string) {
-	err := os.Chdir(path)
-
-	if err != nil {
-		fmt.Println()
-		fmt.Printf("  >_   Error - cd: Unable to access '%s' - Directory not found.\n", path)
-		fmt.Println()
-	}
-}
+// remove a directory or a file with a specified name.
 
 // changeToHomeDirectory changes the current directory to the user's home directory.
 func changeToHomeDirectory() {
