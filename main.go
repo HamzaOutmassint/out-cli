@@ -94,13 +94,14 @@ func executeCommand(input string) {
 func displayHelpMenu() {
 	fmt.Println()
 	fmt.Println("  Available commands:")
-	fmt.Println("    help       		  - Show this help message")
-	fmt.Println("    cr         		  - Create a directory (usage: cr <directory>)")
-	fmt.Println("    cd         		  - Change the current directory (usage: cd <directory>)")
-	fmt.Println("    ls         		  - List files in a directory (usage: ls [directory])")
-	fmt.Println("    rm         		  - Delete a file or directory (usage: rm <path>)")
-	fmt.Println("    /          		  - Change to home directory (usage: / )")
-	fmt.Println("    exit or Ctrl+C        - Exit the program")
+	fmt.Println("    help       		  	  - Show this help message")
+	fmt.Println("    mkd         		  - Create a directory/file or multi directories/files (usage: mkd <path> <path>)")
+	fmt.Println("    cd         		  	  - Change the current directory (usage: cd <path>)")
+	fmt.Println("    ls         		  	  - List files in a directory (usage: ls <path>)")
+	fmt.Println("    rm         		  	  - Delete a file/files or an empty directory/directories (usage: rm <path> <path>)")
+	fmt.Println("    rmd         		  - Delete a directory or multi directories (usage: rm <path> <path>)")
+	fmt.Println("    /          		  	  - Change to home directory (usage: / )")
+	fmt.Println("    exit or Ctrl+C        	  - Exit the program")
 	fmt.Println()
 }
 
