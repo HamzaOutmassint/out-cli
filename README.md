@@ -5,7 +5,7 @@ Out-CLI is a custom command-line application built with Go, born out of the need
 ## Features
 
 - **Directory Navigation**:
-  - `cd <path>`: Change the current directory.
+  - `cd <path>`: Change the current directory.cls
   - `/`: Quickly navigate to the home directory.
 
 - **Directory and File Management**:
