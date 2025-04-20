@@ -5,23 +5,24 @@ Out-CLI is a custom command-line application built with Go, born out of the need
 ## Features
 
 - **Directory Navigation**:
-  - `cd <path>`: Change the current directory.cls
-  - `/`: Quickly navigate to the home directory.
+  - `cd <path>`: Change the current working directory.
+  - `/`: Quickly navigate to the user's home directory.
 
 - **Directory and File Management**:
-  - `mkd <path> [<path>...]`: Create one or more directories or files.
-  - `rm <path> [<path>...]`: Delete one or more files.
+  - `mkd <path> [<path>...]`: Create one or more directories.
+  - `mkf <path> [<path>...]`: Create one or more files.
+  - `rmf <path> [<path>...]`: Delete one or more files.
   - `rmd <path> [<path>...]`: Delete one or more directories.
 
 - **Directory Listing**:
-  - `ls [<path>]`: List the contents of a directory. Defaults to the current directory if no path is provided.
+  - `ls [<path>]`: List the contents of a directory. Defaults to the current directory if no path is provided. Displays directories and files with their modification dates and types.
 
 - **Terminal Management**:
   - `cls`: Clear the terminal screen.
 
 - **Help and Exit**:
-  - `help`: Display the help menu with a list of available commands.
-  - `exit`: Exit the application.
+  - `help`: Display a detailed help menu with all available commands.
+  - `exit`: Exit the CLI application.
 
 ## Installation
 
